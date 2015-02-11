@@ -143,12 +143,21 @@ var methods = {
    });
   },
   loadMain: function (passedUsername) {
+    methods.updateStatus(passedUsername,true);
     localStorage.chattanooga = passedUsername;
     console.log('Logged in as: ', passedUsername);
     $('#loginWrapper').addClass('invis');
     $('.container').removeClass('invis');
     $('input[name="usernameInput"]').val('');
-    methods.updateStatus(passedUsername,true);
+  },
+  logOutUser: function () {
+    methods.updateStatus(localStorage.chattanooga,false);
+    delete localStorage.chattanooga;
+    $('input[name="usernameInput"]').val('');
+    $('input[name="usernameInput"]').keyup();
+    $('#loginWrapper').removeClass('invis');
+    $('.container').addClass('invis');
+    console.log('SUCCESS: logout');
   },
   updateStatus: function (passedUsername,activeStatus) {
     $.ajax({
@@ -176,14 +185,6 @@ var methods = {
         console.log('WARNING: updateStatus GET');
       }
     });
-  },
-  logOutUser: function () {
-    methods.updateStatus(localStorage.chattanooga,false);
-    delete localStorage.chattanooga;
-    $('input[name="usernameInput"]').val('');
-    $('#loginWrapper').removeClass('invis');
-    $('.container').addClass('invis');
-    console.log('SUCCESS: logout');
   },
   renderUsernames:function () {
 
