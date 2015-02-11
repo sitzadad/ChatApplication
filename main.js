@@ -41,12 +41,12 @@ var methods = {
         $('#usernameForm legend, #usernameForm input').addClass('hl placeholderColor');
         $('#usernameForm').addClass('hlBorder');
         $('#usernameForm').removeClass('fgBorder');
-        $('#usernameForm .btn-primary').prop('disabled', false);
+        $('#loginBtn').prop('disabled', false);
       }else{
         $('#usernameForm legend, #usernameForm input').removeClass('hl placeholderColor');
         $('#usernameForm').addClass('fgBorder');
         $('#usernameForm').removeClass('hlBorder');
-        $('#usernameForm .btn-primary').prop('disabled', true);
+        $('#loginBtn').prop('disabled', true);
       }
     });
 
@@ -54,9 +54,9 @@ var methods = {
     $('input[name="enterTextInput"]').on('keyup', function (e) {
       e.preventDefault();
       if($('input[name="enterTextInput"]').val().length > 0){
-        $('#enterTextForm .btn-success').prop('disabled', false);
+        $('#sendChat').prop('disabled', false);
       }else{
-        $('#enterTextForm .btn-success').prop('disabled', true);
+        $('#sendChat').prop('disabled', true);
       }
     });
 
@@ -70,6 +70,12 @@ var methods = {
     $('#usernameForm').on('submit', function (e) {
       e.preventDefault();
       methods.loginMaster($('input[name="usernameInput"]').val());
+    });
+
+    //send new chat
+    $('#enterTextForm').on('submit', function (e) {
+      e.preventDefault();
+      methods.sendChat($('input[name="enterTextInput"]').val());
     });
   },
   loginMaster: function (passedUsername) {
@@ -140,21 +146,22 @@ var methods = {
      error: function () {
        console.log('WARNING: createNewUser');
      }
-   });
+    });
   },
   loadMain: function (passedUsername) {
-    methods.updateStatus(passedUsername,true);
+    methods.updateStatus(passedUsername, true);
     localStorage.chattanooga = passedUsername;
     console.log('Logged in as: ', passedUsername);
+    setInterval(methods.renderChats, 300);
+    setInterval(methods.renderUsernames, 300);
     $('#loginWrapper').addClass('invis');
     $('.container').removeClass('invis');
     $('input[name="usernameInput"]').val('');
+    $('input[name="usernameInput"]').keyup();
   },
   logOutUser: function () {
-    methods.updateStatus(localStorage.chattanooga,false);
+    methods.updateStatus(localStorage.chattanooga, false);
     delete localStorage.chattanooga;
-    $('input[name="usernameInput"]').val('');
-    $('input[name="usernameInput"]').keyup();
     $('#loginWrapper').removeClass('invis');
     $('.container').addClass('invis');
     console.log('SUCCESS: logout');
@@ -179,20 +186,99 @@ var methods = {
          error: function () {
            console.log('WARNING: updateStatus PUT');
          }
-       });
+        });
       },
       error: function () {
         console.log('WARNING: updateStatus GET');
       }
     });
   },
-  renderUsernames:function () {
-
+  sendChat: function (passedChat) {
+    $('input[name="enterTextInput"]').val('');
+    $('input[name="enterTextInput"]').keyup();
+    $.ajax({
+      url: methods.config.url,
+      type: 'GET',
+      success: function (retrievedObjects){
+        var allChats = _.find(retrievedObjects, function (eachObject) {
+          return eachObject.hasOwnProperty('chats');
+        });
+        if(allChats === undefined){
+          //if server empty, initialize master user object
+          methods.initChatObject(passedChat);
+        }else{
+          var newChatObject = {
+            message: passedChat,
+            username: localStorage.chattanooga,
+            timestamp: Date.now()
+          }
+          allChats.chats.push(newChatObject);
+          $.ajax({
+           url: methods.config.url + '/' + allChats._id,
+           data: allChats,
+           type: 'PUT',
+           success: function () {
+             console.log('SUCCESS: sendChat PUT: '+passedChat+' (_id: '+allChats._id+')');
+           },
+           error: function () {
+             console.log('WARNING: sendChat PUT');
+           }
+          });
+        }
+      },
+      error: function () {
+        console.log('WARNING: sendChat GET');
+      }
+    });
   },
-  sendChat: function () {
-
+  initChatObject: function (passedChat) {
+    $.ajax({
+      url: methods.config.url,
+      data: {
+        chats: [
+          {
+            message: passedChat,
+            username: localStorage.chattanooga,
+            timestamp: Date.now()
+          }
+        ]
+      },
+      type: 'POST',
+      success:function(){
+        console.log('SUCCESS: initUserObject');
+      },
+      error:function(){
+        console.log('WARNING: initUserObject');
+      }
+    });
   },
   renderChats: function () {
+    $.ajax({
+      url: methods.config.url,
+      type: 'GET',
+      success: function (retrievedObjects){
+        var allChats = _.find(retrievedObjects, function (eachObject) {
+          return eachObject.hasOwnProperty('chats');
+        });
+        if(allChats === undefined){
+          //no chats to display
+          $('#chatWindow').html('<article><span class = "messageHTML">No messages to display</span></article>');
+        }else{
+          var compiled = _.template($('#chatTmpl').html());
+          var markup = '';
+          _.each(allChats.chats, function (eachChat) {
+            markup+=compiled(eachChat);
+          });
+          $('#chatWindow').html(markup);
+        }
+        console.log('SUCCESS: renderChats');
+      },
+      error: function () {
+        console.log('WARNING: renderChats');
+      }
+    });
+  },
+  renderUsernames:function () {
 
   }
 }

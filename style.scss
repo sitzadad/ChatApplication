@@ -1,6 +1,6 @@
 $bg:#f0f0f0;
 $fg:grey;
-$hl:#337ab7;
+$hl:#5cb85c;
 
 //SHARED***
 *{
@@ -93,6 +93,11 @@ legend{
   margin-bottom:1em;
   overflow: auto;
 }
+.usernameHTML{
+  font-size:1.1em;
+  font-weight:bold;
+  margin-left:0.5em;
+}
 #enterTextForm{
   margin:0;
 }
@@ -100,6 +105,6 @@ input[name='enterTextInput']{
   width:90%;
   border:none;
 }
-.btn-success{
+#sendChat{
   width:9.2%;
 }

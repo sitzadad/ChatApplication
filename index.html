@@ -6,6 +6,12 @@
     <link rel='stylesheet' href='bower_components/fontawesome/css/font-awesome.css'/>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
     <link rel='stylesheet' href='style.css'/>
+    <script type='html/template' id='chatTmpl'>
+      <article data-taskid='<%= timestamp %>'>
+        <span class = "usernameHTML"><%= username %>:</span>
+        <span class = "messageHTML"><%= message %></span>
+      </article>
+    </script>
   </head>
   <body>
     <div id='loginWrapper'>
@@ -13,7 +19,7 @@
         <fieldset>
           <legend>Chat Application</legend>
           <input type="text" name='usernameInput' placeholder='Enter Username'>
-          <button type='submit' class='btn btn-primary' disabled='true'>Log In</button>
+          <button type='submit' id = 'loginBtn' class='btn btn-success' disabled='true'>Log In</button>
         </fieldset>
       </form>
     </div>
@@ -21,7 +27,7 @@
 
     <button class='btn btn-danger greyBG'>Log Out</button>
     <button class='btn btn-warning greyBG'>Clear Server</button>
-    
+
     <div class='container fgBorder invis'>
       <div class="row">
         <div class="col-md-3">
@@ -30,8 +36,8 @@
         <div class='col-md-9'>
           <div id="chatWindow"></div>
           <form id='enterTextForm' action="">
-            <input type="text" name='enterTextInput' placeholder='Type Message Here' id='messageInput'>
-            <button type='submit' class='btn btn-success' disabled='true'>Send</button>
+            <input type="text" name='enterTextInput' placeholder='Type Message Here'>
+            <button type='submit' id = 'sendChat' class='btn btn-success' disabled='true'>Send</button>
           </form>
         </div><!-- end col-md-8 -->
       </div><!-- end row -->

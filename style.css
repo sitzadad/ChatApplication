@@ -16,13 +16,13 @@
   background-color: grey; }
 
 .hl {
-  color: #337ab7; }
+  color: #5cb85c; }
 
 .fgBorder {
   border: 2px solid grey; }
 
 .hlBorder {
-  border: 2px solid #337ab7; }
+  border: 2px solid #5cb85c; }
 
 input {
   height: 34px;
@@ -31,7 +31,7 @@ input {
   font-weight: bold; }
 
 .placeholderColor::-webkit-input-placeholder {
-  color: #337ab7; }
+  color: #5cb85c; }
 
 ::-webkit-input-placeholder {
   color: grey;
@@ -83,6 +83,11 @@ legend {
   margin-bottom: 1em;
   overflow: auto; }
 
+.usernameHTML {
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-left: 0.5em; }
+
 #enterTextForm {
   margin: 0; }
 
@@ -90,5 +95,5 @@ input[name='enterTextInput'] {
   width: 90%;
   border: none; }
 
-.btn-success {
+#sendChat {
   width: 9.2%; }
