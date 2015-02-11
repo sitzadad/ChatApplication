@@ -1,0 +1,21 @@
+{
+  "name": "ChatApplication",
+  "version": "0.0.0",
+  "authors": [
+    "Adam Sitz"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "fontawesome": "~4.3.0",
+    "jquery": "~2.1.3",
+    "underscore": "~1.7.0",
+    "bootstrap": "~3.3.2"
+  }
+}

@@ -1,0 +1,94 @@
+* {
+  font-family: 'Open Sans'; }
+
+*:focus {
+  outline: 0; }
+
+.invis {
+  display: none; }
+
+.btn {
+  border: none; }
+  .btn:disabled {
+    background-color: grey; }
+
+.greyBG {
+  background-color: grey; }
+
+.hl {
+  color: #337ab7; }
+
+.fgBorder {
+  border: 2px solid grey; }
+
+.hlBorder {
+  border: 2px solid #337ab7; }
+
+input {
+  height: 34px;
+  font-size: 1.1em;
+  color: grey;
+  font-weight: bold; }
+
+.placeholderColor::-webkit-input-placeholder {
+  color: #337ab7; }
+
+::-webkit-input-placeholder {
+  color: grey;
+  font-weight: bold; }
+
+#loginWrapper {
+  text-align: center;
+  padding-top: 15em; }
+
+#usernameForm {
+  display: inline-block;
+  background-color: #f0f0f0;
+  padding: 1em;
+  border-radius: 1em; }
+
+legend {
+  border: none;
+  color: grey;
+  font-weight: bold; }
+
+.btn-danger {
+  position: absolute;
+  right: 10px;
+  top: 10px; }
+
+.btn-warning {
+  position: absolute;
+  right: 97px;
+  top: 10px; }
+
+.container {
+  width: 80%;
+  background-color: #f0f0f0;
+  margin-top: 5em;
+  padding: 2em;
+  border-radius: 1em; }
+
+#userList {
+  width: 100%;
+  min-height: 100px;
+  max-height: 475px;
+  background-color: white;
+  overflow: auto; }
+
+#chatWindow {
+  width: 100%;
+  height: 475px;
+  background-color: white;
+  margin-bottom: 1em;
+  overflow: auto; }
+
+#enterTextForm {
+  margin: 0; }
+
+input[name='enterTextInput'] {
+  width: 90%;
+  border: none; }
+
+.btn-success {
+  width: 9.2%; }
